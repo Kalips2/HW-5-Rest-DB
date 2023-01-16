@@ -6,6 +6,9 @@ import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
+/**
+ * Class for describe composite key for Holds.
+ * */
 @NoArgsConstructor
 @AllArgsConstructor
 public class WarehouseGoodsPK implements Serializable {

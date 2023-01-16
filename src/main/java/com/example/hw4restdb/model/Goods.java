@@ -18,6 +18,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+/**
+ * Goods entity class.
+ */
 @Entity
 @Table(name = "goods")
 @Getter
@@ -47,7 +50,7 @@ public class Goods {
   @Column(name = "manufacturers_id", insertable = false, updatable = false)
   private Long manufacturers_code;
 
-  public Goods(String name, BigDecimal price, Manufacturers manufacturers, Long manufacturers_fk) {
+  public Goods(String name, BigDecimal price , Manufacturers manufacturers, Long manufacturers_fk) {
     this.name = name;
     this.price = price;
     this.manufacturers = manufacturers;
@@ -69,5 +72,16 @@ public class Goods {
   @Override
   public int hashCode() {
     return Objects.hash(id);
+  }
+
+  @Override
+  public String toString() {
+    return "Goods{" +
+        "id=" + id +
+        ", name='" + name + '\'' +
+        ", price=" + price +
+        ", manufacturers=" + manufacturers +
+        ", manufacturers_code=" + manufacturers_code +
+        '}';
   }
 }

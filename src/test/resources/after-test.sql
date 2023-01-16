@@ -1,0 +1,5 @@
+DROP TABLE IF EXISTS holds;
+DROP TABLE IF EXISTS goods;
+DROP TABLE IF EXISTS manufacturers;
+DROP TABLE IF EXISTS warehouses;
+

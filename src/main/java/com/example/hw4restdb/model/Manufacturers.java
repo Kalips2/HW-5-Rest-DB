@@ -13,13 +13,14 @@ import jakarta.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
+/**
+ * Manufacturers entity class.
+ */
 @Entity
 @Table(name = "manufacturers")
 @Getter
@@ -44,7 +45,7 @@ public class Manufacturers {
   @JsonManagedReference
   private List<Goods> goods = new ArrayList<>();
 
-  public Manufacturers(String name, String address) {
+  public Manufacturers(String address, String name) {
     this.name = name;
     this.address = address;
   }

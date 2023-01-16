@@ -1,7 +1,7 @@
-drop table  if exists holds;
-drop table if exists goods;
-drop table if exists manufacturers;
-drop table if exists warehouses;
+DROP TABLE IF EXISTS holds;
+DROP TABLE IF EXISTS goods;
+DROP TABLE IF EXISTS manufacturers;
+DROP TABLE IF EXISTS warehouses;
 
 CREATE TABLE manufacturers
 (
@@ -16,33 +16,32 @@ CREATE TABLE goods
 (
     code             BIGINT         NOT NULL AUTO_INCREMENT,
     name             VARCHAR(255)   NOT NULL,
-    price            decimal(38, 2) NOT NULL,
+    price            DECIMAL(38, 2) NOT NULL,
     manufacturers_id BIGINT,
     PRIMARY KEY (code),
     FOREIGN KEY (manufacturers_id) REFERENCES manufacturers (code)
 )
     ENGINE = InnoDB;
 
-create table warehouses
+CREATE TABLE warehouses
 (
-    code    bigint       not null auto_increment,
-    address varchar(255) not null,
-    name    varchar(255) not null,
-    primary key (code)
-) engine = InnoDB;
+    code    BIGINT       NOT NULL AUTO_INCREMENT,
+    address VARCHAR(255) NOT NULL,
+    name    VARCHAR(255) NOT NULL,
+    PRIMARY KEY (code)
+) ENGINE = InnoDB;
 
-create table holds
+CREATE TABLE holds
 (
-    goods_code     bigint         not null,
-    warehouse_code bigint         not null,
-    amount         decimal(38, 2) not null,
-    primary key (goods_code, warehouse_code),
+    goods_code     BIGINT         NOT NULL,
+    warehouse_code BIGINT         NOT NULL,
+    amount         DECIMAL(38, 2) NOT NULL,
+    PRIMARY KEY (goods_code, warehouse_code),
     FOREIGN KEY (goods_code) REFERENCES goods (code),
     FOREIGN KEY (warehouse_code) REFERENCES warehouses (code)
-) engine = InnoDB;
+) ENGINE = InnoDB;
 
-
-INSERT INTO manufacturers(code, address, name)
+INSERT INTO manufacturers(code, name, address)
 VALUES (1, 'Київхліб', 'м. Київ, вул. Межигірська, 83'),
        (2, 'Кулиниичі', 'м. Київ, вул. Межигірська, 83'),
        (3, '1-й Київський молокозавод', 'м. Київ, вул. Жилянська, 47'),
@@ -88,7 +87,7 @@ VALUES (1, 'Батон білий', 14.3, 3),
        (31, 'Шоколад гіркий, чорний', 20.20, 10),
        (32, 'Молоко домашнє', 30.20, 7);
 
-INSERT INTO warehouses(code, address, name)
+INSERT INTO warehouses(code, name, address)
 VALUES (1, 'Васильківський', 'м. Київ, вул. Васильківська, 36'),
        (2, 'Голосіївський', 'м. Київ, вул. Ломоносова, 89'),
        (3, 'Святошинський', 'м. Київ, вул. Вербівська, 20'),
