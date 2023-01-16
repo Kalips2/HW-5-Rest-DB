@@ -50,7 +50,7 @@ public class GoodsControllerTest {
 
 
   @Test
-  public void getAllUsersReturnStatus200AndAllGoods() throws Exception {
+  public void getAllGoodsReturnStatus200AndAllGoods() throws Exception {
 
     List<Goods> allGoods = goodsRepo.findAll();
 
@@ -136,7 +136,7 @@ public class GoodsControllerTest {
             .contentType(MediaType.APPLICATION_JSON)
             .content(dtoAsJson))
         .andExpect(status().isNotFound())
-        .andExpect(jsonPath("$.ErrorMessage", equalTo("There is no manufactures with such code!")));
+        .andExpect(jsonPath("$.ErrorMessage", equalTo("There is no manufacturers with such code!")));
   }
 
   @Test
@@ -165,7 +165,7 @@ public class GoodsControllerTest {
             .contentType(MediaType.APPLICATION_JSON)
             .content(dtoAsJson))
         .andExpect(status().isNotFound())
-        .andExpect(jsonPath("$.ErrorMessage", equalTo("There is no manufactures with such code!")));
+        .andExpect(jsonPath("$.ErrorMessage", equalTo("There is no manufacturers with such code!")));
   }
 
   @Test
@@ -223,7 +223,8 @@ public class GoodsControllerTest {
   }
 
   @Test
-  public void deleteGoodsWithForeignKeysInHoldsReturnBadRequestAndThrowException() throws Exception {
+  public void deleteGoodsWithForeignKeysInHoldsReturnBadRequestAndThrowException()
+      throws Exception {
 
     mockMvc.perform(delete("/goods/delete/{code}", 1L))
         .andExpect(status().isBadRequest())

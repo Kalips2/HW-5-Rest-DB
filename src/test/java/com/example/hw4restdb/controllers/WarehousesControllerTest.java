@@ -7,17 +7,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.example.hw4restdb.Hw4RestDbApplication;
-import com.example.hw4restdb.model.Manufacturers;
 import com.example.hw4restdb.model.Warehouses;
-import com.example.hw4restdb.repositories.ManufacturersRepo;
 import com.example.hw4restdb.repositories.WarehousesRepo;
-import com.example.hw4restdb.services.impl.ManufacturersServiceImpl;
 import com.example.hw4restdb.services.impl.WarehousesServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
@@ -42,12 +38,9 @@ public class WarehousesControllerTest {
   private WarehousesRepo warehousesRepo;
   @Autowired
   private MockMvc mockMvc;
-  @Value("${sizeOfResultOnPage}")
-  private int size;
-
 
   @Test
-  public void getAllUsersReturnStatus200AndAllGoods() throws Exception {
+  public void getWarehousesReturnStatus200AndAllGoods() throws Exception {
 
     List<Warehouses> allManufacturers = warehousesRepo.findAll();
 
@@ -73,18 +66,19 @@ public class WarehousesControllerTest {
   }
 
   @Test
-  public void getGoodsByCodeReturnCodeAndStatusOk() throws Exception {
+  public void getWarehouseByCodeReturnCodeAndStatusOk() throws Exception {
     Long code = 1L;
     Warehouses warehouses = new Warehouses("м. Київ, вул. Васильківська, 36", "Васильківський");
 
-    mockMvc.perform(post("/warehouse/{code}",code))
+    mockMvc.perform(post("/warehouse/{code}", code))
         .andExpect(status().isOk())
         .andExpect(jsonPath("$.code", equalTo(code), Long.class))
         .andExpect(jsonPath("$.name", equalTo(warehouses.getName())))
         .andExpect(jsonPath("$.address", equalTo(warehouses.getAddress())));
   }
+
   @Test
-  public void getGoodsByIncorrectCodeThrowExceptionAndReturnStatusNotFound() throws Exception {
+  public void getWarehouseByIncorrectCodeThrowExceptionAndReturnStatusNotFound() throws Exception {
     Long code = 800L;
     Warehouses warehouses = new Warehouses("м. Київ, вул. Межигірська, 83", "Київхліб");
 

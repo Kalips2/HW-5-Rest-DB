@@ -7,16 +7,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.example.hw4restdb.Hw4RestDbApplication;
-import com.example.hw4restdb.dto.GoodsDto;
 import com.example.hw4restdb.model.Manufacturers;
 import com.example.hw4restdb.repositories.ManufacturersRepo;
 import com.example.hw4restdb.services.impl.ManufacturersServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import java.math.BigDecimal;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
@@ -41,12 +38,9 @@ public class ManufacturersControllerTest {
   private ManufacturersRepo manufacturersRepo;
   @Autowired
   private MockMvc mockMvc;
-  @Value("${sizeOfResultOnPage}")
-  private int size;
-
 
   @Test
-  public void getAllUsersReturnStatus200AndAllGoods() throws Exception {
+  public void getAllManufacturersReturnStatus200AndAllGoods() throws Exception {
 
     List<Manufacturers> allManufacturers = manufacturersRepo.findAll();
 
@@ -72,24 +66,27 @@ public class ManufacturersControllerTest {
   }
 
   @Test
-  public void getGoodsByCodeReturnCodeAndStatusOk() throws Exception {
+  public void getManufacturerByCodeReturnCodeAndStatusOk() throws Exception {
     Long code = 1L;
     Manufacturers manufacturers = new Manufacturers("м. Київ, вул. Межигірська, 83", "Київхліб");
 
-    mockMvc.perform(post("/manufacturers/{code}",code))
+    mockMvc.perform(post("/manufacturers/{code}", code))
         .andExpect(status().isOk())
         .andExpect(jsonPath("$.code", equalTo(code), Long.class))
         .andExpect(jsonPath("$.name", equalTo(manufacturers.getName())))
         .andExpect(jsonPath("$.address", equalTo(manufacturers.getAddress())));
   }
+
   @Test
-  public void getGoodsByIncorrectCodeThrowExceptionAndReturnStatusNotFound() throws Exception {
+  public void getManufacturerByIncorrectCodeThrowExceptionAndReturnStatusNotFound()
+      throws Exception {
     Long code = 800L;
     Manufacturers manufacturers = new Manufacturers("м. Київ, вул. Межигірська, 83", "Київхліб");
 
     mockMvc.perform(post("/manufacturers/{code}", code))
         .andExpect(status().isNotFound())
-        .andExpect(jsonPath("$.ErrorMessage", equalTo("There is no manufacturers with such code!")));
+        .andExpect(
+            jsonPath("$.ErrorMessage", equalTo("There is no manufacturers with such code!")));
   }
 
 }

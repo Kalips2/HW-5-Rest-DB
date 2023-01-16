@@ -8,17 +8,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.example.hw4restdb.Hw4RestDbApplication;
 import com.example.hw4restdb.model.Holds;
-import com.example.hw4restdb.model.Warehouses;
 import com.example.hw4restdb.repositories.HoldsRepo;
-import com.example.hw4restdb.repositories.WarehousesRepo;
 import com.example.hw4restdb.services.impl.HoldsServiceImpl;
-import com.example.hw4restdb.services.impl.WarehousesServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.math.BigDecimal;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
@@ -43,8 +39,6 @@ public class HoldsControllerTest {
   private HoldsRepo holdsRepo;
   @Autowired
   private MockMvc mockMvc;
-  @Value("${sizeOfResultOnPage}")
-  private int size;
 
 
   @Test
@@ -70,6 +64,7 @@ public class HoldsControllerTest {
         .andExpect(jsonPath("$[*].amount", contains(
             allManufacturers.stream()
                 .map(Holds::getAmount)
+                .map(BigDecimal::doubleValue)
                 .toArray()
         )));
   }
@@ -77,12 +72,12 @@ public class HoldsControllerTest {
   @Test
   public void getHoldsByCodeReturnCodeAndStatusOk() throws Exception {
     mockMvc.perform(post("/hold")
-        .param("warehouse", "1")
-        .param("goods", "1"))
+            .param("warehouse", "1")
+            .param("goods", "1"))
         .andExpect(status().isOk())
         .andExpect(jsonPath("$.goods_code", equalTo(1)))
         .andExpect(jsonPath("$.warehouse_code", equalTo(1)))
-        .andExpect(jsonPath("$.amount", equalTo(BigDecimal.valueOf(11)), BigDecimal.class));
+        .andExpect(jsonPath("$.amount", equalTo(11), Integer.class));
   }
 
 }
